@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jh-Tools - CodeGPT</title>
+</head>
+<body>
+    <h1>Jh-Tools - CodeGPT</h1>
+
+    <p>You are authenticated.</p>
+
+    <p>Code:</p>
+
+    <div
+        id="code"
+        style="
+            color: black;
+            background-color: black;
+            display: inline-block;
+            padding: 4px 8px;
+            cursor: pointer;
+            user-select: none;
+        "
+    >
+        {{ code }}
+    </div>
+
+    <script>
+        const code = document.getElementById("code");
+
+        let revealed = false;
+        code.onclick = async function () {
+            if (!revealed) {
+
+                code.style.color = "white";
+
+                try {
+                    await navigator.clipboard.writeText(code.innerText);
+                    alert("Code copied to clipboard");
+                } catch {
+                    alert("Failed to copy code");
+                }
+                setTimeout(() => {
+                    code.style.color = "black";
+                    dosomething = true;
+                    revealed = false;
+                }, 1000);
+                revealed = true;
+            }
+        };
+    </script>
+</body>
+</html>

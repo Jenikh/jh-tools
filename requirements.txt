@@ -1,2 +1,5 @@
-Flask
-gunicorn
+fastapi
+uvicorn[standard]
+httpx
+jinja2
+dotenv
