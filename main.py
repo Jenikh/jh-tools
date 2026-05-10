@@ -11,6 +11,7 @@ import jinja2
 import dotenv
 import os
 import traceback
+from templateing import MiniTemplates
 dotenv.load_dotenv()
 
 
@@ -20,11 +21,10 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Templates (pointing to same folder like your Flask app)
-templates = Jinja2Templates(directory="templates")
+templates = MiniTemplates(directory="templates")
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 
-templates.env.cache = {}
 data_cache = {}
 
 # =========================
