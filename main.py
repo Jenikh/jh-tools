@@ -20,7 +20,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Templates (pointing to same folder like your Flask app)
-templates = Jinja2Templates(directory="static")
+templates = Jinja2Templates(directory="templates")
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 
