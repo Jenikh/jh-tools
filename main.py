@@ -49,6 +49,11 @@ async def template_not_found_handler(request: Request, exc):
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.head("/")
+async def head():
+    return JSONResponse(status_code=200,content={})
+
+
 @app.get("/CodeGPT")
 async def bot(request: Request):
     return templates.TemplateResponse("CodeGPT.html", {"request": request})
@@ -108,4 +113,4 @@ async def bot_return(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8080, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))
