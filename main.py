@@ -40,20 +40,40 @@ async def not_found_handler(request: Request, exc):
 async def template_not_found_handler(request: Request, exc):
     print("Template not found:", exc)
     return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
+content = None
+class FakeOpenHandle:
+    def __enter__(self):
+        return None
 
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        global content
+        content = traceback
 @app.exception_handler(Exception)
 async def global_error(request: Request, exc: Exception):
-    print("ERROR:", repr(exc))
-    traceback.print_exc()
+    import traceback
+
+    tb = traceback.format_exc()
+
+    print("FULL TRACEBACK:\n", tb)
+
     return JSONResponse(
         status_code=500,
-        content={"error": str(exc)}
+        content={
+            "error": str(exc),
+            "traceback": tb
+        }
     )
 
 # =========================
 # Routes
 # =========================
-
+DEV = False
+@app.get("/exception")
+def exc():
+    if DEV:
+        a
+    else:
+        return ""
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
