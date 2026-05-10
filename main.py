@@ -10,6 +10,7 @@ import uuid
 import jinja2
 import dotenv
 import os
+import traceback
 dotenv.load_dotenv()
 
 
@@ -40,6 +41,14 @@ async def template_not_found_handler(request: Request, exc):
     print("Template not found:", exc)
     return templates.TemplateResponse("404.html", {"request": request}, status_code=404)
 
+@app.exception_handler(Exception)
+async def global_error(request: Request, exc: Exception):
+    print("ERROR:", repr(exc))
+    traceback.print_exc()
+    return JSONResponse(
+        status_code=500,
+        content={"error": str(exc)}
+    )
 
 # =========================
 # Routes
@@ -48,10 +57,6 @@ async def template_not_found_handler(request: Request, exc):
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
-@app.head("/")
-async def head():
-    return JSONResponse(status_code=200,content={})
 
 
 @app.get("/CodeGPT")
