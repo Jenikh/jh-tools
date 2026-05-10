@@ -24,6 +24,7 @@ templates = Jinja2Templates(directory="templates")
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 
+templates.env.cache = {}
 data_cache = {}
 
 # =========================
